@@ -8,7 +8,8 @@ export const personalInfo = {
   bio: `I'm a passionate Software Developer and Computer Science student specializing in Artificial Intelligence. I love building full-stack web applications that solve real-world problems — from intelligent courier systems to fitness platforms. With a strong foundation in Data Structures, Algorithms, and modern web technologies, I bring ideas to life through clean, efficient code.`,
   resumeUrl:
     "https://drive.google.com/file/d/1QoOoCV_eXB2-gPhLU9Gi6SLFbL332UAa/view?usp=sharing",
-  profileImage: "/images/profile.jpg",
+  profileImage: "/images/profile-alt.png",
+  profileImageAlt: "/images/profile.png",
 };
 
 export const socialLinks = [
@@ -71,9 +72,13 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "HTML" },
       { name: "CSS" },
+      { name: "JavaScript" },
+      { name: "TypeScript" },
+      { name: "Bootstrap" },
       { name: "Tailwind CSS" },
       { name: "React" },
       { name: "Next.js" },
+      { name: "Angular" },
       { name: "Redux" },
     ],
   },
@@ -83,6 +88,7 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "Node.js" },
       { name: "Express.js" },
+      { name: "Spring Boot" },
       { name: "JWT" },
       { name: "Mongoose" },
     ],
@@ -226,7 +232,7 @@ export const achievements: Achievement[] = [
 ];
 
 export const aboutStats = [
-  { label: "Projects Built", value: "3+" },
+  { label: "Projects Built", value: "11+" },
   { label: "DSA Problems", value: "950+" },
   { label: "CGPA", value: "8.07" },
 ];

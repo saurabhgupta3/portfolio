@@ -1,5 +1,4 @@
 import Navbar from "@/components/Navbar";
-import Hero from "@/components/Hero";
 import About from "@/components/About";
 import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
@@ -13,8 +12,14 @@ export default function Home() {
   return (
     <>
       <Navbar />
+      {/* Global background orbs — replicate the Hero vibe across all sections */}
+      <div className="global-bg-orbs" aria-hidden="true">
+        <div className="global-bg-orb global-bg-orb--1" />
+        <div className="global-bg-orb global-bg-orb--2" />
+        <div className="global-bg-orb global-bg-orb--3" />
+        <div className="global-bg-orb global-bg-orb--4" />
+      </div>
       <main>
-        <Hero />
         <About />
         <Skills />
         <Projects />

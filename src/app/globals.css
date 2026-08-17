@@ -645,18 +645,92 @@ a:hover {
   right: 20%;
 }
 
+/* ─── Global Background Orbs ────────────────────────────────────────────── */
+.global-bg-orbs {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.global-bg-orb {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.global-bg-orb--1 {
+  width: 550px;
+  height: 550px;
+  background: var(--accent-primary);
+  top: -120px;
+  right: -150px;
+}
+
+.global-bg-orb--2 {
+  width: 400px;
+  height: 400px;
+  background: var(--accent-cyan);
+  bottom: -80px;
+  left: -120px;
+}
+
+.global-bg-orb--3 {
+  width: 250px;
+  height: 250px;
+  background: var(--accent-pink);
+  top: 35%;
+  right: 15%;
+}
+
+.global-bg-orb--4 {
+  width: 300px;
+  height: 300px;
+  background: var(--accent-primary);
+  bottom: 20%;
+  left: 10%;
+  opacity: 0.08;
+}
+
+/* Make main content sit above the fixed orbs */
+main {
+  position: relative;
+  z-index: 1;
+}
+
+/* First section (About) needs top padding for the floating navbar */
+#about {
+  padding-top: 120px;
+}
+
 /* ─── About ──────────────────────────────────────────────────────────────── */
+.about-section {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding-top: 100px;
+  padding-bottom: 60px;
+}
+
+.about-section .container {
+  width: 100%;
+}
+
 .about-grid {
   display: grid;
-  grid-template-columns: 1fr 1.4fr;
-  gap: 60px;
+  grid-template-columns: auto 1fr;
+  gap: 72px;
   align-items: center;
 }
 
 .about-image-wrapper {
   position: relative;
-  width: 280px;
-  height: 280px;
+  width: 300px;
+  height: 300px;
   margin: 0 auto;
 }
 
@@ -690,15 +764,46 @@ a:hover {
   object-fit: cover;
 }
 
-.about-text p {
-  margin-bottom: 20px;
-  font-size: 1.05rem;
+/* Typewriter text points */
+.about-points {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  margin-bottom: 8px;
+  min-height: 160px;
+}
+
+.about-point {
+  font-size: 1.08rem;
+  color: var(--text-secondary);
+  line-height: 1.75;
+  margin: 0;
+}
+
+.typewriter-cursor {
+  color: var(--accent-primary);
+  font-weight: 300;
+  margin-left: 1px;
+  animation: blink 0.7s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .about-stats {
   display: flex;
   gap: 32px;
-  margin-top: 32px;
+  margin-top: 36px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.about-stats--visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .about-stat {
@@ -1195,6 +1300,116 @@ a:hover {
   height: 16px;
 }
 
+/* ─── 3D Photo Flip Card ─────────────────────────────────────────────────── */
+.photo-card-scene {
+  perspective: 1000px;
+  width: 300px;
+  height: 300px;
+  margin: 0 auto;
+  position: relative;
+  /* Transform is driven by JS during vibration */
+  will-change: transform;
+}
+
+.photo-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  cursor: default;
+}
+
+/*
+ * Initial state: card is flipped 180° so Photo 1 (the --back face) is visible.
+ * No transition here — Photo 1 appears instantly on load.
+ */
+.photo-card {
+  transform: rotateY(180deg);
+}
+
+/*
+ * Photo transition: after vibration ends, smoothly rotate to show Photo 2 (front face).
+ * Uses a cubic-bezier for a premium deceleration feel.
+ */
+.photo-card.photo-transitioning {
+  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: rotateY(0deg);
+}
+
+/*
+ * Settled state: card at rest showing Photo 2. Transition kept for click-to-flip.
+ */
+.photo-card.photo-settled {
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  transform: rotateY(0deg);
+  cursor: pointer;
+}
+
+.photo-card.photo-settled.flipped {
+  transform: rotateY(180deg);
+}
+
+.photo-card__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  background: var(--bg-tertiary);
+}
+
+.photo-card__face img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.photo-card__face--back {
+  transform: rotateY(180deg);
+}
+
+/* Border frame for the card — matches the original about-image-wrapper::before */
+.photo-card-scene::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: var(--radius-xl);
+  background: linear-gradient(
+    135deg,
+    var(--accent-primary),
+    var(--accent-cyan)
+  );
+  opacity: 0.6;
+  z-index: 0;
+  transition: opacity 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Subtle glow during vibration */
+.photo-card-scene.vibrating::before {
+  opacity: 0.85;
+  box-shadow:
+    0 0 20px rgba(79, 209, 197, 0.35),
+    0 0 40px rgba(108, 99, 255, 0.2);
+}
+
+/* Flip hint text */
+.flip-hint {
+  position: absolute;
+  bottom: -32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  white-space: nowrap;
+}
+
+.flip-hint.visible {
+  opacity: 1;
+}
+
 /* ─── Responsive ─────────────────────────────────────────────────────────── */
 @media (max-width: 900px) {
   :root {
@@ -1263,6 +1478,11 @@ a:hover {
 
 @media (max-width: 480px) {
   .about-image-wrapper {
+    width: 200px;
+    height: 200px;
+  }
+
+  .photo-card-scene {
     width: 200px;
     height: 200px;
   }
