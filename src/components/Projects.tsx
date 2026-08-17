@@ -1,63 +1,82 @@
-import { projects } from "@/data/portfolio";
-import { GithubIcon, ExternalLinkIcon } from "./Icons";
+"use client";
+
+import { useCallback, useState } from "react";
+import { projects, INITIAL_PROJECT_COUNT } from "@/data/portfolio";
+import ProjectCard from "./ProjectCard";
 import SectionWrapper from "./SectionWrapper";
 
+const EXPAND_TRANSITION_MS = 550;
+
 export default function Projects() {
+  const [expanded, setExpanded] = useState(false);
+  const [showExtras, setShowExtras] = useState(false);
+  const hasMoreProjects = projects.length > INITIAL_PROJECT_COUNT;
+
+  const handleToggle = useCallback(() => {
+    if (expanded) {
+      setExpanded(false);
+      window.setTimeout(() => setShowExtras(false), EXPAND_TRANSITION_MS);
+      return;
+    }
+
+    setShowExtras(true);
+    requestAnimationFrame(() => {
+      requestAnimationFrame(() => setExpanded(true));
+    });
+  }, [expanded]);
+
+  const visibleProjects = showExtras
+    ? projects
+    : projects.slice(0, INITIAL_PROJECT_COUNT);
+
   return (
     <SectionWrapper id="projects">
       <div className="section-header">
         <h2 className="section-title">Featured Projects</h2>
-        <p className="section-subtitle">
-          A collection of projects that showcase my skills and passion for building
-        </p>
       </div>
 
-      <div className="projects-grid">
-        {projects.map((project) => (
-          <div className="glass-card project-card" key={project.title}>
-            <div className="project-card-content">
-              <h3 className="project-title">{project.title}</h3>
-
-              <ul className="project-description">
-                {project.description.map((point, i) => (
-                  <li key={i}>{point}</li>
-                ))}
-              </ul>
-
-              <div className="project-tech-stack">
-                {project.techStack.map((tech) => (
-                  <span className="tech-tag" key={tech}>
-                    {tech}
-                  </span>
-                ))}
-              </div>
-
-              <div className="project-links">
-                <a
-                  href={project.githubUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="project-link project-link--github"
-                >
-                  <GithubIcon />
-                  Code
-                </a>
-                {project.liveUrl && project.liveUrl !== "#" && (
-                  <a
-                    href={project.liveUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="project-link project-link--live"
-                  >
-                    <ExternalLinkIcon />
-                    Live Demo
-                  </a>
-                )}
-              </div>
-            </div>
+      <div className={`projects-grid ${expanded ? "is-expanded" : ""}`}>
+        {visibleProjects.map((project, index) => (
+          <div
+            key={project.slug}
+            className={`project-grid-cell${index >= INITIAL_PROJECT_COUNT ? " project-grid-cell--extra" : ""}`}
+            style={
+              expanded && index >= INITIAL_PROJECT_COUNT
+                ? { transitionDelay: `${(index - INITIAL_PROJECT_COUNT) * 0.06}s` }
+                : undefined
+            }
+          >
+            <ProjectCard project={project} />
           </div>
         ))}
       </div>
+
+      {hasMoreProjects && (
+        <div className="projects-toggle-wrap">
+          <button
+            type="button"
+            className="projects-toggle-btn"
+            onClick={handleToggle}
+            aria-expanded={expanded}
+          >
+            {expanded ? (
+              <>
+                Show Less
+                <span className="projects-toggle-arrow" aria-hidden="true">
+                  ↑
+                </span>
+              </>
+            ) : (
+              <>
+                View More Projects
+                <span className="projects-toggle-arrow" aria-hidden="true">
+                  →
+                </span>
+              </>
+            )}
+          </button>
+        </div>
+      )}
     </SectionWrapper>
   );
 }

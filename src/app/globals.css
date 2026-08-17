@@ -913,10 +913,41 @@ main {
 }
 
 /* ─── Projects ───────────────────────────────────────────────────────────── */
+#projects .section-header {
+  margin-bottom: 48px;
+}
+
+#projects .section-title {
+  margin-bottom: 0;
+}
+
 .projects-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 28px;
+  align-items: stretch;
+}
+
+.project-grid-cell {
+  min-width: 0;
+  display: flex;
+}
+
+.project-grid-cell--extra {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    grid-template-rows 0.55s cubic-bezier(0.23, 1, 0.32, 1),
+    opacity 0.45s ease,
+    transform 0.45s ease;
+}
+
+.projects-grid.is-expanded .project-grid-cell--extra {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .project-card {
@@ -924,55 +955,122 @@ main {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  width: 100%;
+  min-height: 0;
+  height: 100%;
+  border: 1px solid rgba(157, 151, 255, 0.38);
+  box-shadow: 0 0 18px rgba(108, 99, 255, 0.08);
+}
+
+.project-card:hover {
+  transform: none;
+  border-color: rgba(157, 151, 255, 0.62);
+  box-shadow: 0 0 24px rgba(108, 99, 255, 0.16);
+}
+
+/* Thumbnail with 3D flip (matches About photo-card effect) */
+.project-thumbnail-scene {
+  position: relative;
+  perspective: 900px;
+  height: 200px;
+  flex-shrink: 0;
+  background: var(--bg-tertiary);
+  border-bottom: 2px dotted rgba(108, 99, 255, 0.88);
+  overflow: hidden;
+}
+
+.project-thumbnail {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.project-card:hover .project-thumbnail {
+  transform: rotateY(180deg);
+}
+
+.project-thumbnail__face {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  overflow: hidden;
+}
+
+.project-thumbnail__face--back {
+  transform: rotateY(180deg);
+}
+
+.project-thumbnail__img {
+  object-fit: cover;
+  transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.project-card:hover .project-thumbnail__img {
+  transform: scale(1.04);
+}
+
+.project-thumbnail__placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    135deg,
+    rgba(108, 99, 255, 0.18),
+    rgba(79, 209, 197, 0.12)
+  );
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-align: center;
+  padding: 16px;
+}
+
+.project-thumbnail__placeholder--alt {
+  background: linear-gradient(
+    135deg,
+    rgba(79, 209, 197, 0.15),
+    rgba(108, 99, 255, 0.18)
+  );
 }
 
 .project-card-content {
-  padding: 28px;
+  padding: 24px;
   flex: 1;
   display: flex;
   flex-direction: column;
 }
 
 .project-title {
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 700;
-  margin-bottom: 16px;
+  margin-bottom: 10px;
   color: var(--text-primary);
 }
 
-.project-description {
-  list-style: none;
-  margin-bottom: 20px;
-  flex: 1;
-}
-
-.project-description li {
-  position: relative;
-  padding-left: 18px;
-  margin-bottom: 10px;
-  font-size: 0.92rem;
+.project-summary {
+  font-size: 0.9rem;
   color: var(--text-secondary);
-  line-height: 1.6;
-}
-
-.project-description li::before {
-  content: "▸";
-  position: absolute;
-  left: 0;
-  color: var(--accent-primary);
-  font-weight: bold;
+  line-height: 1.65;
+  margin-bottom: 0;
 }
 
 .project-tech-stack {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin-bottom: 20px;
+  margin-top: 50px;
+  margin-bottom: 18px;
 }
 
 .project-links {
   display: flex;
-  gap: 12px;
+  flex-wrap: wrap;
+  gap: 10px;
   margin-top: auto;
 }
 
@@ -980,11 +1078,39 @@ main {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  padding: 8px 18px;
+  padding: 8px 16px;
   border-radius: var(--radius-full);
   font-size: 0.85rem;
   font-weight: 500;
   transition: all var(--transition-base);
+}
+
+.project-link--live {
+  background: linear-gradient(
+    135deg,
+    rgba(79, 209, 197, 0.45),
+    rgba(56, 178, 172, 0.35)
+  );
+  color: #e6fffa;
+  border: 1px solid rgba(79, 209, 197, 0.65);
+  box-shadow: 0 2px 12px rgba(79, 209, 197, 0.2);
+}
+
+.project-link--live:hover {
+  background: linear-gradient(
+    135deg,
+    rgba(79, 209, 197, 0.65),
+    rgba(56, 178, 172, 0.5)
+  );
+  border-color: var(--accent-cyan);
+  color: #fff;
+  box-shadow: 0 4px 18px rgba(79, 209, 197, 0.35);
+}
+
+.project-link--disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+  pointer-events: none;
 }
 
 .project-link--github {
@@ -999,21 +1125,52 @@ main {
   border-color: var(--text-muted);
 }
 
-.project-link--live {
-  background: var(--accent-glow);
-  color: var(--accent-light);
-  border: 1px solid rgba(108, 99, 255, 0.3);
-}
-
-.project-link--live:hover {
-  background: rgba(108, 99, 255, 0.2);
-  border-color: var(--accent-primary);
-  color: #fff;
-}
-
 .project-link svg {
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
+}
+
+.projects-toggle-wrap {
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+}
+
+.projects-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 28px;
+  border-radius: var(--radius-full);
+  font-size: 0.95rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  color: var(--accent-light);
+  background: transparent;
+  border: 1px solid rgba(108, 99, 255, 0.35);
+  transition: all var(--transition-base);
+}
+
+.projects-toggle-btn:hover {
+  background: var(--accent-glow);
+  border-color: var(--accent-primary);
+  color: #fff;
+  box-shadow: 0 4px 20px var(--accent-glow);
+}
+
+.projects-toggle-arrow {
+  display: inline-block;
+  transition: transform var(--transition-base);
+}
+
+.projects-toggle-btn:hover .projects-toggle-arrow {
+  transform: translateX(3px);
+}
+
+.projects-toggle-btn[aria-expanded="true"]:hover .projects-toggle-arrow {
+  transform: translateY(-2px);
 }
 
 /* ─── Experience Timeline ────────────────────────────────────────────────── */
@@ -1467,7 +1624,7 @@ main {
   }
 
   .projects-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, 1fr);
   }
 
   .skills-grid {
@@ -1513,6 +1670,10 @@ main {
 
   .skills-grid {
     columns: 1;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
   }
 }
 

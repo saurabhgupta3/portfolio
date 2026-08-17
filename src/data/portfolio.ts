@@ -124,45 +124,154 @@ export const skillCategories: SkillCategory[] = [
 
 export interface Project {
   title: string;
-  description: string[];
+  slug: string;
+  description: string;
   techStack: string[];
   githubUrl: string;
-  liveUrl: string;
+  liveUrl?: string;
+  imagePrimary: string;
+  imageSecondary: string;
 }
+
+export const INITIAL_PROJECT_COUNT = 3;
+
+// Live Demo: set liveUrl to your deployed URL (Vercel, Netlify, etc.).
+// Leave as "" to show a disabled Live Demo button until you deploy.
+// Screenshots: place two PNGs per project in public/images/projects/
+//   e.g. neo-cns-1.png (default) and neo-cns-2.png (flip on hover).
 
 export const projects: Project[] = [
   {
     title: "Neo-CNS",
-    description: [
-      "Developed a full-stack Courier Network System for order management, shipment tracking, and courier assignment.",
-      "Features role-based dashboards, real-time status updates, email notifications, and admin user management.",
-      "Integrated AI/ML models for accurate ETA prediction, payment fraud detection, and intelligent customer chatbot support.",
-    ],
-    techStack: ["React", "Node.js", "MongoDB", "Python (ML)"],
-    githubUrl: "https://github.com/saurabhgupta3", // Update with actual repo URL
-    liveUrl: "#", // Update with actual live URL
+    slug: "neo-cns",
+    description:
+      "Full-stack courier network system with real-time tracking, role-based dashboards, and ML-powered ETA and fraud detection.",
+    techStack: ["React", "Node.js", "MongoDB", "Python"],
+    githubUrl: "https://github.com/saurabhgupta3/neo-cns",
+    liveUrl: "https://neo-cns.vercel.app/",
+    imagePrimary: "/images/projects/neo-cns-1.png",
+    imageSecondary: "/images/projects/neo-cns-2.png",
   },
   {
     title: "StayEase-bnb",
-    description: [
-      "A full-stack web application for property rentals, allowing users to easily list, browse, and book stays online.",
-      "Followed MVC pattern with Joi validation, ownership authorization, and Mongoose hooks for cascading deletes.",
-      "Integrated Passport.js for authentication, Cloudinary for image uploads, and Leaflet.js with OpenStreetMap API for maps.",
-    ],
-    techStack: ["Node.js", "Express.js", "MongoDB", "React"],
-    githubUrl: "https://github.com/saurabhgupta3", // Update with actual repo URL
-    liveUrl: "#", // Update with actual live URL
+    slug: "stayease-bnb",
+    description:
+      "Property rental platform with map-based listings, Passport.js authentication, and Cloudinary image uploads.",
+    techStack: ["React", "Node", "MongoDB", "Express"],
+    githubUrl: "https://github.com/saurabhgupta3/stayease-bnb",
+    liveUrl: "https://stayease-bnb.onrender.com/",
+    imagePrimary: "/images/projects/stayease-bnb-1.png",
+    imageSecondary: "/images/projects/stayease-bnb-2.png",
   },
   {
     title: "FlexHub",
-    description: [
-      "A full-stack fitness web app with workout sessions, membership plans, BMI calculator, and community contact form.",
-      "Built an Express.js REST API with CORS, dotenv credentials, input validation, and error handling with HTTP status codes.",
-      "Integrated Nodemailer with Gmail SMTP for email, Axios for API communication, and React Toastify for notifications.",
-    ],
+    slug: "flexhub",
+    description:
+      "Fitness web app with workouts, memberships, BMI calculator, and REST API with email notifications.",
     techStack: ["React", "Node.js", "Express.js", "Axios"],
-    githubUrl: "https://github.com/saurabhgupta3", // Update with actual repo URL
-    liveUrl: "#", // Update with actual live URL
+    githubUrl: "https://github.com/saurabhgupta3/flexhub",
+    liveUrl: "https://flexhub-rouge.vercel.app/",
+    imagePrimary: "/images/projects/flexhub-1.png",
+    imageSecondary: "/images/projects/flexhub-2.png",
+  },
+  {
+    title: "CardioAI",
+    slug: "cardioai",
+    description:
+      "AI-driven cardiovascular health analysis tool that uses machine learning models to deliver predictive health insights from user data.",
+    techStack: ["Python", "Machine Learning", "React"],
+    githubUrl: "https://github.com/saurabhgupta3/CardioAI-main",
+    liveUrl: "",
+    imagePrimary: "/images/projects/cardioai-1.png",
+    imageSecondary: "/images/projects/cardioai-2.png",
+  },
+  {
+    title: "FilmGenie",
+    slug: "filmgenie",
+    description:
+      "Movie discovery and rental platform with search, filtering, and a responsive React frontend for browsing film catalogs.",
+    techStack: ["React", "JavaScript", "CSS"],
+    githubUrl: "https://github.com/saurabhgupta3/FilmGenie",
+    liveUrl: "",
+    imagePrimary: "/images/projects/filmgenie-1.png",
+    imageSecondary: "/images/projects/filmgenie-2.png",
+  },
+  {
+    title: "Admin Dashboard",
+    slug: "admin-dashboard",
+    description:
+      "Responsive admin panel with data visualization widgets, user management, and a modular layout for monitoring key metrics.",
+    techStack: ["React", "JavaScript", "CSS"],
+    githubUrl: "https://github.com/saurabhgupta3/admin-dashboard",
+    liveUrl: "",
+    imagePrimary: "/images/projects/admin-dashboard-1.png",
+    imageSecondary: "/images/projects/admin-dashboard-2.png",
+  },
+  {
+    title: "CMS",
+    slug: "cms",
+    description:
+      "Content management system with full CRUD operations, structured content editing, and role-based access control.",
+    techStack: ["Node.js", "Express.js", "MongoDB"],
+    githubUrl: "https://github.com/saurabhgupta3/CMS",
+    liveUrl: "",
+    imagePrimary: "/images/projects/cms-1.png",
+    imageSecondary: "/images/projects/cms-2.png",
+  },
+  {
+    title: "LetsEat",
+    slug: "letseat",
+    description:
+      "Restaurant discovery app for browsing menus, exploring dishes, and managing a food ordering cart with a clean UI.",
+    techStack: ["React", "JavaScript", "CSS"],
+    githubUrl: "https://github.com/saurabhgupta3/LetsEat",
+    liveUrl: "",
+    imagePrimary: "/images/projects/letseat-1.png",
+    imageSecondary: "/images/projects/letseat-2.png",
+  },
+  {
+    title: "Task Bee",
+    slug: "task-bee",
+    description:
+      "Task management app with priority sorting, deadline tracking, and persistent storage for daily productivity workflows.",
+    techStack: ["React", "JavaScript", "Local Storage"],
+    githubUrl: "https://github.com/saurabhgupta3/task-bee",
+    liveUrl: "",
+    imagePrimary: "/images/projects/task-bee-1.png",
+    imageSecondary: "/images/projects/task-bee-2.png",
+  },
+  {
+    title: "TalkSmart",
+    slug: "talksmart",
+    description:
+      "Smart conversation assistant that integrates NLP capabilities for intelligent, context-aware chat interactions.",
+    techStack: ["Python", "JavaScript", "NLP"],
+    githubUrl: "https://github.com/saurabhgupta3/talkSmart",
+    liveUrl: "",
+    imagePrimary: "/images/projects/talksmart-1.png",
+    imageSecondary: "/images/projects/talksmart-2.png",
+  },
+  {
+    title: "Weather App",
+    slug: "weather-app",
+    description:
+      "Real-time weather dashboard built with React, fetching live forecast data from external APIs with location search.",
+    techStack: ["React", "API Integration", "CSS"],
+    githubUrl: "https://github.com/saurabhgupta3/weather-app-react",
+    liveUrl: "",
+    imagePrimary: "/images/projects/weather-app-1.png",
+    imageSecondary: "/images/projects/weather-app-2.png",
+  },
+  {
+    title: "Digitomize",
+    slug: "digitomize",
+    description:
+      "Digital platform with a modern UI and full-stack architecture for streamlined user workflows and data management.",
+    techStack: ["React", "Node.js", "MongoDB"],
+    githubUrl: "https://github.com/saurabhgupta3/digitomize",
+    liveUrl: "",
+    imagePrimary: "/images/projects/digitomize-1.png",
+    imageSecondary: "/images/projects/digitomize-2.png",
   },
 ];
 
