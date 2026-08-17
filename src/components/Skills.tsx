@@ -10,15 +10,15 @@ export default function Skills() {
   return (
     <SectionWrapper id="skills">
       <div className="section-header">
-        <h2 className="section-title">Skills & Technologies</h2>
-        <p className="section-subtitle">
-          The tools and technologies I work with to bring ideas to life
-        </p>
+        <span className="section-eyebrow">MY EXPERTISE</span>
+        <h2 className="section-title">
+          Skills & <span className="gradient-text">Technologies</span>
+        </h2>
       </div>
 
       <div className="skills-grid scroll-reveal-children" ref={gridRef}>
         {skillCategories.map((category) => (
-          <div className="glass-card skill-category-card" key={category.category}>
+          <div className="skill-category-card" key={category.category}>
             <div className="skill-category-header">
               <span className="skill-category-icon">{category.icon}</span>
               <h3 className="skill-category-name">{category.category}</h3>

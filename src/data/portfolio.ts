@@ -72,8 +72,6 @@ export const skillCategories: SkillCategory[] = [
     skills: [
       { name: "HTML" },
       { name: "CSS" },
-      { name: "JavaScript" },
-      { name: "TypeScript" },
       { name: "Bootstrap" },
       { name: "Tailwind CSS" },
       { name: "React" },
@@ -115,6 +113,11 @@ export const skillCategories: SkillCategory[] = [
       { name: "Data Structures" },
       { name: "Algorithms" },
       { name: "OOP" },
+      { name: "DBMS" },
+      { name: "OS" },
+      { name: "CN" },
+      { name: "Software Engineering" },
+      { name: "System Design" },
     ],
   },
 ];
