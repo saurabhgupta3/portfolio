@@ -31,6 +31,18 @@ export default function Navbar() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
+
   const closeMobile = useCallback(() => setMobileOpen(false), []);
 
   const handleNavClick = useCallback(
@@ -46,10 +58,73 @@ export default function Navbar() {
   );
 
   return (
-    <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
-      <div className="navbar-inner">
-        {/* Nav links */}
-        <ul className="navbar-links">
+    <>
+      {/* Main Navbar */}
+      <nav className={`navbar ${scrolled ? "scrolled" : ""}`} id="navbar">
+        <div className="navbar-inner">
+          {/* Desktop Nav links */}
+          <ul className="navbar-links">
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <a
+                  href={link.href}
+                  className={activeSection === link.href.replace("#", "") ? "active" : ""}
+                  onClick={(e) => handleNavClick(e, link.href)}
+                >
+                  {link.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <a
+                href={personalInfo.resumeUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-primary navbar-resume-btn"
+              >
+                <DownloadIcon />
+                Resume
+              </a>
+            </li>
+          </ul>
+
+          {/* Mobile hamburger toggle */}
+          <button
+            className={`navbar-toggle ${mobileOpen ? "open" : ""}`}
+            onClick={() => setMobileOpen(!mobileOpen)}
+            aria-label={mobileOpen ? "Close navigation menu" : "Open navigation menu"}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
+        </div>
+      </nav>
+
+      {/* Mobile Backdrop Overlay (Separate from nav to prevent transform clipping) */}
+      <div
+        className={`navbar-mobile-overlay ${mobileOpen ? "open" : ""}`}
+        onClick={closeMobile}
+        aria-hidden={!mobileOpen}
+      />
+
+      {/* Mobile Drawer (Separate from nav to prevent transform clipping) */}
+      <aside
+        className={`navbar-mobile ${mobileOpen ? "open" : ""}`}
+        aria-hidden={!mobileOpen}
+      >
+        <div className="navbar-mobile-header">
+          <span className="navbar-mobile-brand">&lt;SG /&gt;</span>
+          <button
+            className="navbar-mobile-close"
+            onClick={closeMobile}
+            aria-label="Close menu"
+          >
+            ✕
+          </button>
+        </div>
+
+        <ul className="navbar-mobile-links">
           {navLinks.map((link) => (
             <li key={link.href}>
               <a
@@ -57,65 +132,26 @@ export default function Navbar() {
                 className={activeSection === link.href.replace("#", "") ? "active" : ""}
                 onClick={(e) => handleNavClick(e, link.href)}
               >
+                <span className="navbar-mobile-link-dot" />
                 {link.label}
               </a>
             </li>
           ))}
-          <li>
-            <a
-              href={personalInfo.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary navbar-resume-btn"
-            >
-              <DownloadIcon />
-              Resume
-            </a>
-          </li>
         </ul>
 
-        {/* Mobile toggle */}
-        <button
-          className={`navbar-toggle ${mobileOpen ? "open" : ""}`}
-          onClick={() => setMobileOpen(!mobileOpen)}
-          aria-label="Toggle navigation menu"
-        >
-          <span />
-          <span />
-          <span />
-        </button>
-      </div>
-
-      {/* Mobile overlay */}
-      <div
-        className={`navbar-mobile-overlay ${mobileOpen ? "open" : ""}`}
-        onClick={closeMobile}
-      />
-
-      {/* Mobile menu */}
-      <div className={`navbar-mobile ${mobileOpen ? "open" : ""}`}>
-        <ul>
-          {navLinks.map((link) => (
-            <li key={link.href}>
-              <a href={link.href} onClick={(e) => handleNavClick(e, link.href)}>
-                {link.label}
-              </a>
-            </li>
-          ))}
-          <li>
-            <a
-              href={personalInfo.resumeUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn btn-primary"
-              style={{ marginTop: "12px" }}
-            >
-              <DownloadIcon />
-              Resume
-            </a>
-          </li>
-        </ul>
-      </div>
-    </nav>
+        <div className="navbar-mobile-footer">
+          <a
+            href={personalInfo.resumeUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="btn btn-primary navbar-mobile-resume-btn"
+            onClick={closeMobile}
+          >
+            <DownloadIcon />
+            Resume
+          </a>
+        </div>
+      </aside>
+    </>
   );
 }
