@@ -7,30 +7,47 @@ export default function Education() {
     <SectionWrapper id="education">
       <div className="section-header">
         <h2 className="section-title">Education</h2>
-        <p className="section-subtitle">My academic background and qualifications</p>
+        <p className="section-subtitle">
+          My academic background and qualifications
+        </p>
       </div>
 
-      {education.map((edu) => (
-        <div className="glass-card education-card" key={edu.institution}>
-          <h3 className="education-degree">{edu.degree}</h3>
-          <p className="education-specialization">
-            Specialization: {edu.specialization}
-          </p>
-          <p className="education-institution">{edu.institution}</p>
+      {education.map((edu, index) => (
+        <div key={`${edu.institution}-${edu.degree}`}>
+          <div className="glass-card education-card">
+            <h3 className="education-degree">{edu.degree}</h3>
 
-          <div className="education-meta">
-            <span className="education-meta-item">
-              <CalendarIcon />
-              {edu.duration}
-            </span>
-            <span className="education-meta-item">
-              <MapPinIcon />
-              {edu.location}
-            </span>
-            <span className="education-meta-item">
-              <strong>{edu.grade}</strong>
-            </span>
+            <p className="education-specialization">
+              Specialization: {edu.specialization}
+            </p>
+
+            <p className="education-institution">
+              {edu.institution}
+            </p>
+
+            <div className="education-meta">
+              <span className="education-meta-item">
+                <CalendarIcon />
+                {edu.duration}
+              </span>
+
+              <span className="education-meta-item">
+                <MapPinIcon />
+                {edu.location}
+              </span>
+
+              <span className="education-meta-item">
+                <strong>{edu.grade}</strong>
+              </span>
+            </div>
           </div>
+
+          {/* Separator between education cards */}
+          {index < education.length - 1 && (
+            <div className="education-separator">
+              <span />
+            </div>
+          )}
         </div>
       ))}
     </SectionWrapper>

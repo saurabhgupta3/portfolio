@@ -20,27 +20,28 @@ export const socialLinks = [
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com/in/saurabhgupta", // Update with your actual LinkedIn URL
+    url: "https://www.linkedin.com/in/saurabh-gupta-1b689226b/", // Update with your actual LinkedIn URL
     icon: "linkedin",
   },
   {
     name: "LeetCode",
-    url: "https://leetcode.com/saurabhgupta", // Update with your actual LeetCode URL
+    url: "https://leetcode.com/saurabhgupta3", // Update with your actual LeetCode URL
     icon: "leetcode",
   },
   {
     name: "Email",
-    url: "mailto:your.email@example.com", // Update with your actual email
+    url: "mailto:sggupta548@gmail.com", // Update with your actual email
     icon: "email",
   },
 ];
 
 export const navLinks = [
   { label: "About", href: "#about" },
-  { label: "Skills", href: "#skills" },
+  { label: "Skills", href: "#skills" }, 
   { label: "Projects", href: "#projects" },
   { label: "Experience", href: "#experience" },
   { label: "Education", href: "#education" },
+  { label: "Achievements", href: "#achievements" },
   { label: "Contact", href: "#contact" },
 ];
 
@@ -344,6 +345,22 @@ export const education: Education[] = [
     location: "Greater Noida",
     duration: "2022 — 2026",
     grade: "CGPA: 8.07",
+  },
+  {
+    degree: "Class XII",
+    specialization: "Science",
+    institution: "S.P.D.S Intermediate College",
+    location: "MadarDeeh Jaunpur",
+    duration: "2020 — 2021",
+    grade: "Percentage: 72.2%",
+  },
+  {
+    degree: "Class X",
+    specialization: "UP Board",
+    institution: "S.P.D.S Intermediate College",
+    location: "MadarDeeh Jaunpur",
+    duration: "2018 — 2019",
+    grade: "Percentage: 82.83%",
   },
 ];
 

@@ -3,7 +3,7 @@ import SectionWrapper from "./SectionWrapper";
 
 export default function Certifications() {
   return (
-    <SectionWrapper id="certifications">
+    <SectionWrapper id="achievements">
       <div className="section-header">
         <h2 className="section-title">Certifications & Achievements</h2>
         <p className="section-subtitle">
