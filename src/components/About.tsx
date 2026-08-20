@@ -11,7 +11,7 @@ const aboutPoints = [
 ];
 
 // ─── Typewriter Hook (faster) ──────────────────────────────────────────────
-function useTypewriter(lines: string[], charSpeed = 0.5, lineDelay = 20) {
+function useTypewriter(lines: string[], charSpeed = 1, lineDelay = 33) {
   const [currentLine, setCurrentLine] = useState(0);
   const [currentChar, setCurrentChar] = useState(0);
   const [completedLines, setCompletedLines] = useState<string[]>([]);
